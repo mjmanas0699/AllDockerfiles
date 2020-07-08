@@ -12,11 +12,13 @@ RUN cd /usr/local/bin && curl -LO https://storage.googleapis.com/kubernetes-rele
   yum install -y initscripts &&\
   yum install sudo -y &&\
   yum install net-tools -y &&\
+  yum install git jq -y && \
+  mkdir /root/YML
   sed -i '100i\jenkins ALL=(ALL)       NOPASSWD: ALL ' /etc/sudoers 
               
 COPY ca.crt client.key client.crt /root/
 COPY config /root/.kube
-
+COPY php.yml pvc.yml service.yml /root/YML
 EXPOSE 8080
 
 CMD ["java", "-jar", "/usr/lib/jenkins/jenkins.war"]
